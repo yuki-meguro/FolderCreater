@@ -38,12 +38,12 @@ def FileName(date):
     loop = True
     err_count = 0
     while loop:
-        print('ファイル名を入力して下さい。\n')
+        print('フォルダ名を入力して下さい。\n')
         name = str(input())
         if name == '':
             err_count += 1
             if err_count < 3:
-                print('ファイル名が不正です\n')
+                print('フォルダ名が不正です\n')
             else:
                 print('規定入力回数に達しました。\nプログラムを終了します。\n')
                 sys.exit()
@@ -64,7 +64,7 @@ def NameCheck(target, path):
     if stat == 0:
         return(0)
     else:
-        print('同名ファイルが存在します。\n')
+        print('同名フォルダが存在します。\n')
         return(1)
 
 
