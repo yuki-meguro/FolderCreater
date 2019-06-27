@@ -2,6 +2,31 @@
 import os
 import sys
 import datetime
+import subprocess
+
+
+def Title():
+    print('新しいフォルダの作成\n')
+
+
+def SysCheck():
+    os_name = os.name
+    if os_name == 'nt':  # Windows
+        return(0)
+    else:
+        return(1)
+
+
+def DeskTop():
+    desktop_path = os.getenv("HOMEDRIVE") + \
+        os.getenv("HOMEPATH") + "\\Desktop\\"
+    return(desktop_path)
+
+
+def OpenFolder(path):
+    subprocess.run('explorer {}'.format(path))
+    # Python Version -3.5
+    # subprocess.call('explorer {}'.format(path))
 
 
 def NowDate():
@@ -28,9 +53,10 @@ def FileName(date):
     return(title)
 
 
-def NameCheck(target):
+def NameCheck(target, path):
     stat = 0
-    ls = os.listdir(path='./')
+    ls = os.listdir(path=path)
+    print(ls)
     list_size = len(ls)
     for i in range(list_size):
         if ls[i] == target:
@@ -42,18 +68,27 @@ def NameCheck(target):
         return(1)
 
 
-def FolderCreate(name):
-    os.makedirs(name)
+def FolderCreate(name, path):
+    path_and_name = path + name
+    os.makedirs(path_and_name)
 
 
 def main():
+    Title()
+    path = DeskTop()
+    print(path)
     loop = True
     while loop:
         name = FileName(NowDate())
-        status = NameCheck(name)
+        status = NameCheck(name, path)
         if status == 0:
             loop = False
-    FolderCreate(name)
+    FolderCreate(name, path)
+    os_status = SysCheck()
+    if os_status == 0:
+        OpenFolder(name)
+    else:
+        pass
 
 
 main()
